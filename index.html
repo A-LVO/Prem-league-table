@@ -89,4 +89,154 @@
 
         .win { background: #00ff9d; }
         .draw { background: #ffeb3b; }
-       
+        .loss { background: #ff1744; }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid #00ff9d;
+            color: #00ff9d;
+            padding: 10px 15px;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        button {
+            background: #00ff9d;
+            color: #0a0a1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            box-shadow: 0 0 15px #00ff9d;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .scanline {
+            position: fixed;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 157, 0.2);
+            animation: scanline 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .table-header, .table-row {
+                grid-template-columns: 30px 1fr repeat(3, 1fr);
+                overflow-x: auto;
+            }
+            
+            .hide-mobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    <header>
+        <div class="container">
+            <h1 class="glow">⚡ CYBER LEAGUE 2024</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search team..." id="searchInput">
+            <button onclick="filterTeams()"><i class="fas fa-search"></i> SCAN</button>
+        </div>
+
+        <div class="standings-table">
+            <div class="table-header">
+                <span>#</span>
+                <span>Team</span>
+                <span>PL</span>
+                <span>W</span>
+                <span>D</span>
+                <span>L</span>
+                <span class="hide-mobile">GF</span>
+                <span class="hide-mobile">GA</span>
+                <span>GD</span>
+                <span>PTS</span>
+                <span class="hide-mobile">Form</span>
+            </div>
+
+            <div id="tableBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data - replace with actual API data
+        const teams = [
+            {
+                position: 1,
+                name: "Cyber City FC",
+                played: 28,
+                wins: 20,
+                draws: 5,
+                losses: 3,
+                gf: 65,
+                ga: 18,
+                form: ['W', 'W', 'D', 'W', 'L']
+            },
+            // Add more team objects...
+        ];
+
+        function renderTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            data.forEach(team => {
+                const row = document.createElement('div');
+                row.className = 'table-row';
+                
+                const formDots = team.form.map(result => 
+                    `<div class="form-dot ${result === 'W' ? 'win' : result === 'D' ? 'draw' : 'loss'}"></div>`
+                ).join('');
+
+                row.innerHTML = `
+                    <span>${team.position}</span>
+                    <span><img src="placeholder-logo.png" class="team-logo"> ${team.name}</span>
+                    <span>${team.played}</span>
+                    <span>${team.wins}</span>
+                    <span>${team.draws}</span>
+                    <span>${team.losses}</span>
+                    <span class="hide-mobile">${team.gf}</span>
+                    <span class="hide-mobile">${team.ga}</span>
+                    <span>+${team.gf - team.ga}</span>
+                    <span>${(team.wins * 3) + team.draws}</span>
+                    <span class="hide-mobile form-indicator">${formDots}</span>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function filterTeams() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = teams.filter(team => 
+                team.name.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filtered);
+        }
+
+        // Initial render
+        renderTable(teams);
+    </script>
+</body>
+</html>
