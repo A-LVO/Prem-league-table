@@ -3,240 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber League - Standings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Premier League Table</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', monospace;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #0a0a1a;
-            color: #00ff9d;
-            min-height: 100vh;
-        }
-
-        .glow {
-            text-shadow: 0 0 10px #00ff9d;
-        }
-
-        header {
-            background: rgba(10, 10, 30, 0.9);
+            background: #f5f5f5;
             padding: 20px;
-            border-bottom: 2px solid #00ff9d;
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 100px 20px 40px;
-        }
-
-        .standings-table {
-            border: 2px solid #00ff9d;
+            background: white;
             border-radius: 10px;
-            overflow: hidden;
-            background: rgba(0, 255, 157, 0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .table-header {
-            display: grid;
-            grid-template-columns: 50px 2fr repeat(8, 1fr);
+        h1 {
+            text-align: center;
+            color: #38003C;
+            padding: 20px;
+            background: #00FF87;
+            margin: 0;
+            border-radius: 10px 10px 0 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #38003C;
+            color: white;
             padding: 15px;
-            background: rgba(0, 255, 157, 0.1);
-            font-weight: bold;
-            border-bottom: 2px solid #00ff9d;
+            text-align: left;
         }
 
-        .table-row {
-            display: grid;
-            grid-template-columns: 50px 2fr repeat(8, 1fr);
+        tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        td {
             padding: 15px;
-            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
-            transition: 0.3s;
+            border-bottom: 1px solid #ddd;
         }
 
-        .table-row:hover {
-            background: rgba(0, 255, 157, 0.05);
-            transform: scale(1.005);
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .team-logo {
             width: 30px;
             height: 30px;
             object-fit: contain;
-            filter: drop-shadow(0 0 5px #00ff9d);
-        }
-
-        .form-indicator {
-            display: flex;
-            gap: 3px;
-        }
-
-        .form-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .win { background: #00ff9d; }
-        .draw { background: #ffeb3b; }
-        .loss { background: #ff1744; }
-
-        .search-bar {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        input {
-            background: rgba(0, 255, 157, 0.1);
-            border: 1px solid #00ff9d;
-            color: #00ff9d;
-            padding: 10px 15px;
-            border-radius: 5px;
-            width: 300px;
-        }
-
-        button {
-            background: #00ff9d;
-            color: #0a0a1a;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            box-shadow: 0 0 15px #00ff9d;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        .scanline {
-            position: fixed;
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 255, 157, 0.2);
-            animation: scanline 5s linear infinite;
-            pointer-events: none;
-        }
-
-        @media (max-width: 768px) {
-            .table-header, .table-row {
-                grid-template-columns: 30px 1fr repeat(3, 1fr);
-                overflow-x: auto;
-            }
-            
-            .hide-mobile {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="scanline"></div>
-    <header>
-        <div class="container">
-            <h1 class="glow">⚡ CYBER LEAGUE 2024</h1>
-        </div>
-    </header>
-
     <div class="container">
-        <div class="search-bar">
-            <input type="text" placeholder="Search team..." id="searchInput">
-            <button onclick="filterTeams()"><i class="fas fa-search"></i> SCAN</button>
-        </div>
-
-        <div class="standings-table">
-            <div class="table-header">
-                <span>#</span>
-                <span>Team</span>
-                <span>PL</span>
-                <span>W</span>
-                <span>D</span>
-                <span>L</span>
-                <span class="hide-mobile">GF</span>
-                <span class="hide-mobile">GA</span>
-                <span>GD</span>
-                <span>PTS</span>
-                <span class="hide-mobile">Form</span>
-            </div>
-
-            <div id="tableBody"></div>
-        </div>
+        <h1>Premier League Table 2023/24</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pos</th>
+                    <th>Team</th>
+                    <th>Played</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>GD</th>
+                    <th>Pts</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
     </div>
 
-    <script>
-        // Sample data - replace with actual API data
-        const teams = [
-            {
-                position: 1,
-                name: "Cyber City FC",
-                played: 28,
-                wins: 20,
-                draws: 5,
-                losses: 3,
-                gf: 65,
-                ga: 18,
-                form: ['W', 'W', 'D', 'W', 'L']
-            },
-            // Add more team objects...
-        ];
+<script>
+// Premier League data as of March 2024 (example data)
+const teams = [
+    {
+        position: 1,
+        name: "Arsenal",
+        played: 28,
+        wins: 20,
+        draws: 4,
+        losses: 4,
+        gf: 70,
+        ga: 24,
+        points: 64
+    },
+    {
+        position: 2,
+        name: "Liverpool",
+        played: 28,
+        wins: 19,
+        draws: 7,
+        losses: 2,
+        gf: 65,
+        ga: 26,
+        points: 64
+    },
+    {
+        position: 3,
+        name: "Manchester City",
+        played: 28,
+        wins: 19,
+        draws: 6,
+        losses: 3,
+        gf: 63,
+        ga: 28,
+        points: 63
+    },
+    {
+        position: 4,
+        name: "Aston Villa",
+        played: 29,
+        wins: 17,
+        draws: 5,
+        losses: 7,
+        gf: 60,
+        ga: 42,
+        points: 56
+    },
+    {
+        position: 5,
+        name: "Tottenham Hotspur",
+        played: 28,
+        wins: 16,
+        draws: 5,
+        losses: 7,
+        gf: 59,
+        ga: 42,
+        points: 53
+    },
+    // Add more teams...
+];
 
-        function renderTable(data) {
-            const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
+function renderTable() {
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = '';
 
-            data.forEach(team => {
-                const row = document.createElement('div');
-                row.className = 'table-row';
-                
-                const formDots = team.form.map(result => 
-                    `<div class="form-dot ${result === 'W' ? 'win' : result === 'D' ? 'draw' : 'loss'}"></div>`
-                ).join('');
+    teams.forEach(team => {
+        const row = document.createElement('tr');
+        const gd = team.gf - team.ga;
+        
+        row.innerHTML = `
+            <td>${team.position}</td>
+            <td>
+                <div class="team-cell">
+                    <img src="https://resources.premierleague.com/premierleague/badges/70/t${team.position}.png" 
+                         class="team-logo" 
+                         alt="${team.name} logo">
+                    ${team.name}
+                </div>
+            </td>
+            <td>${team.played}</td>
+            <td>${team.wins}</td>
+            <td>${team.draws}</td>
+            <td>${team.losses}</td>
+            <td>${gd}</td>
+            <td><strong>${team.points}</strong></td>
+        `;
 
-                row.innerHTML = `
-                    <span>${team.position}</span>
-                    <span><img src="placeholder-logo.png" class="team-logo"> ${team.name}</span>
-                    <span>${team.played}</span>
-                    <span>${team.wins}</span>
-                    <span>${team.draws}</span>
-                    <span>${team.losses}</span>
-                    <span class="hide-mobile">${team.gf}</span>
-                    <span class="hide-mobile">${team.ga}</span>
-                    <span>+${team.gf - team.ga}</span>
-                    <span>${(team.wins * 3) + team.draws}</span>
-                    <span class="hide-mobile form-indicator">${formDots}</span>
-                `;
+        tableBody.appendChild(row);
+    });
+}
 
-                tableBody.appendChild(row);
-            });
-        }
+// Initial render
+renderTable();
+</script>
 
-        function filterTeams() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = teams.filter(team => 
-                team.name.toLowerCase().includes(searchTerm)
-            );
-            renderTable(filtered);
-        }
-
-        // Initial render
-        renderTable(teams);
-    </script>
 </body>
 </html>
