@@ -3,215 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Design</title>
+    <title>Cyber League - Standings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Courier New', monospace;
         }
 
         body {
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
+            background: #0a0a1a;
+            color: #00ff9d;
+            min-height: 100vh;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px #00ff9d;
+        }
+
+        header {
+            background: rgba(10, 10, 30, 0.9);
+            padding: 20px;
+            border-bottom: 2px solid #00ff9d;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 100px 20px 40px;
         }
 
-        nav {
-            position: fixed;
-            width: 100%;
-            padding: 20px 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
+        .standings-table {
+            border: 2px solid #00ff9d;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(0, 255, 157, 0.05);
         }
 
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #00ff88, #00ffee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #00ff88;
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(45deg, #001010, #002020);
-        }
-
-        .hero-content {
-            max-width: 600px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #aaa;
-            margin-bottom: 30px;
-        }
-
-        .cta-button {
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #00ff88, #00ffee);
-            border: none;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
-        }
-
-        .features {
-            padding: 100px 0;
-        }
-
-        .features-grid {
+        .table-header {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: 50px 2fr repeat(8, 1fr);
+            padding: 15px;
+            background: rgba(0, 255, 157, 0.1);
+            font-weight: bold;
+            border-bottom: 2px solid #00ff9d;
         }
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+        .table-row {
+            display: grid;
+            grid-template-columns: 50px 2fr repeat(8, 1fr);
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
             transition: 0.3s;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
+        .table-row:hover {
+            background: rgba(0, 255, 157, 0.05);
+            transform: scale(1.005);
         }
 
-        .feature-icon {
-            font-size: 2rem;
-            color: #00ff88;
-            margin-bottom: 20px;
+        .team-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px #00ff9d);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .form-indicator {
+            display: flex;
+            gap: 3px;
         }
 
-        .animate-fade-in {
-            animation: fadeIn 1s ease-out forwards;
+        .form-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <div class="container nav-content">
-            <div class="logo">NEXUS</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#features">Features</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content animate-fade-in">
-                <h1>Design Beyond Imagination</h1>
-                <p>Create stunning digital experiences with our cutting-edge design solutions powered by AI and human creativity.</p>
-                <button class="cta-button">Start Exploring</button>
-            </div>
-        </div>
-    </section>
-
-    <section class="features" id="features">
-        <div class="container">
-            <h2>Our Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-brain feature-icon"></i>
-                    <h3>AI Integration</h3>
-                    <p>Smart design solutions powered by machine learning algorithms.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-palette feature-icon"></i>
-                    <h3>Custom Themes</h3>
-                    <p>Fully customizable color schemes and layout configurations.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-bolt feature-icon"></i>
-                    <h3>Instant Preview</h3>
-                    <p>Real-time changes visualization with our advanced editor.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Add scroll animation to feature cards
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        document.querySelectorAll('.feature-card').forEach((card) => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            observer.observe(card);
-        });
-    </script>
-</body>
-</html>
+        .win { background: #00ff9d; }
+        .draw { background: #ffeb3b; }
+       
